@@ -310,8 +310,7 @@ $(document).ready(function(){
 						
 						</div>
 					</div>
-		<div class="bd-example bd-example-tabs">
-			<div id="box">
+		<div class="bd-example bd-example-tabs" id="box">
 				<ul class="nav nav-tabs" id="myTab" role="tablist">
 				  <li class="nav-item">
 					<a class="nav-link active" id="first-tab" data-toggle="tab" href="#first" role="tab" aria-controls="first" aria-selected="true">Treviso I <span class="badge badge-primary" id="trevisoLabel"></span></a>
@@ -364,17 +363,18 @@ $(document).ready(function(){
 					</table>			  
 				  </div>				  
 				</div>
-			</div>
 		</div>
+<!--		
 	<div id="canvas-holder">
 		<canvas id="chart-area"></canvas>
 			<div id="chartjs-tooltip">
 			<table id="tooltip"></table>
 		</div>
 	</div>
-
+-->
 
 </div>
+<!--
 	<script>
 		Chart.defaults.global.tooltips.custom = function(tooltip) {
 			// Tooltip Element
@@ -495,6 +495,6 @@ $(document).ready(function(){
 			window.myPie = new Chart(ctx, config);
 		};
 	</script>
-
+-->
 </body>
 </html>
