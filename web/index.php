@@ -226,7 +226,7 @@ $(document).ready(function(){
 
 		$.ajax({
 			type: "POST",
-			url: 'index.php',
+			url: 'search.php',
 			data: form.serialize(),
 			beforeSend: function(){
 				$('#box').hide();
