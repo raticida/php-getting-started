@@ -1,6 +1,11 @@
 <?php
+header('Content-Type: application/json');
 
-function firtsParamsVenezia() {
+//include simple_html_dom.php
+include('utils/simple_html_dom.php');
+
+
+function firtsParams() {
 	
 	$curl = curl_init();
 
@@ -46,7 +51,7 @@ function firtsParamsVenezia() {
 }
 
 
-function getPaginationParamsVenezia($page) {
+function getPaginationParams($page) {
 	
 	$doc = new simple_html_dom();
 
@@ -73,7 +78,15 @@ function getPaginationParamsVenezia($page) {
 	return $pagination_params;
 }
 
-function getDetailsVenezia($url) {
+function uppercaseText($text) {
+	
+	$text = strtoupper($text);
+	
+return $text;
+}
+
+
+function getDetails($url) {
 	
 	$curl = curl_init();
 
@@ -103,6 +116,68 @@ function getDetailsVenezia($url) {
 	//echo "\n";
 	
 	//$re = '/">(.*?)<\/b><br\/>\s.*?:\s(.*?)<br\/>.*?<\/b>(.*?)di\sprofessione\s\w+\s+e\s(.+?)<br\/>.*?<\/b>(.*?)<br\/>.*?<\/b>(.*?)<br\/>.*?<\/b>(.*?)<br\/>.*?<\/b>(.*?)<br\/>.*?<\/b>(.*?)<br\/>.*?<\/b>(.*?)<br\/>.*?<\/b>(.*?)<br\/>.*?<\/b>(.*?)<br\/>.*?<\/b>(.*?)<br\/>.*?<\/b>(.*?)<br\/>/m';
+	
+	//echo $div_content;
+	
+	preg_match_all('/125\%\">(.*?)<\/b>/', $div_content, $nome_completo);
+	
+	preg_match_all('/figlio\sdi\s\<\/b>(.*?)\<br\/>/', $div_content, $filiacao);
+	
+	preg_match_all('/Nato\sil\s\<\/b\>(.*?)\</', $div_content, $data_nascimento);
+	
+	preg_match_all('/Luogo\sdi\snascita:\s<\/b\>(.*?)\<br\/>/', $div_content, $comune_nascimento);
+	
+	//print_r($nome_completo);
+	//print_r($filiacao);
+	//print_r($data_nascimento);
+	//print_r($comune_nascimento);
+
+	preg_match('/\se\s/m', $filiacao[1][0], $check);
+	
+	if (!empty($check)) {
+		
+		$remove_job = preg_replace('/(di\sprofessione\s.*?\se)/m', 'e', $filiacao[1][0]);
+		
+		//echo $remove_job;
+		//echo "\n";
+		
+		preg_match_all('/(.*?)\se\s(.*)/m', $remove_job, $output_array);
+
+			$nome_do_pai = $output_array[1][0];
+
+			$nome_da_mae = $output_array[2][0];
+
+	} else {
+		$nome_do_pai = $filiacao[1][0];
+		$nome_da_mae = '';
+	}
+
+	preg_match('/.*\((.*)\)/', $comune_nascimento[1][0], $provincia);
+	
+	
+	
+	if (!empty($provincia)) {
+	
+		$provincia = $provincia[1];
+		$comune = preg_replace('/\(.*\)/', '', $comune_nascimento[1][0]);
+	
+	} else {
+		
+		$provincia = 'VENEZIA';
+		$comune = $comune_nascimento[1][0];
+	}	
+	
+		/*
+	echo $nome_completo[1][0]; echo '<br>';
+	echo $nome_do_pai; echo '<br>';
+	echo $nome_da_mae; echo '<br>';
+	echo $data_nascimento[1][0]; echo '<br>';
+	echo $comune; echo '<br>';
+	echo $provincia; echo '<br>';
+	echo '<br>';
+	
+
+	
 	$re = '/">(.*?)<\/b>(.*?)</m';
 
 	preg_match_all($re, $div_content, $matches);
@@ -149,18 +224,35 @@ function getDetailsVenezia($url) {
 	//print_r($nome_da_mae);
 	//echo "\n";
 	
-
+	preg_match('/.*\((.*)\)/', $matches[2][3], $output_array2);
+	
+	
+	
+	if (!empty($output_array2)) {
+	
+		$provincia = $output_array2[1];
+		$comune = preg_replace('/\(.*\)/', '', $matches[2][3]);
+	
+	} else {
+		
+		$provincia = 'VENEZIA';
+		$comune = $matches[2][3];
+	}
+	
+	
+	
+	*/
 
 	// Print the entire match result
 	//var_dump($matches);
+	
 	$result = array(
-	"nome_completo" => preg_replace('/\t/m', ' ', $matches[1][0]),
-	"nome_pai" => $nome_do_pai,
-	"nome_mae" => $nome_da_mae,
-	"data_nascimento" => $matches[2][2],
-	"comune_nascimento" => $matches[2][3],
-	//"distrito_mandamento" => $matches[2][4],
-	"provincia" => $matches[2][4],
+	"nome_completo" => uppercaseText($nome_completo[1][0]),
+	"nome_pai" => uppercaseText($nome_do_pai),
+	"nome_mae" => uppercaseText($nome_da_mae),
+	"data_nascimento" => uppercaseText($data_nascimento[1][0]),
+	"comune_nascimento" => uppercaseText($comune),
+	"provincia" => uppercaseText($provincia),
 	//"comune_residencia" => $matches[2][5],
 	//"numero_extracao" => $matches[2][8],
 	//"numero_registro" => $matches[2][10],
@@ -170,10 +262,11 @@ function getDetailsVenezia($url) {
 
 	//print_r($result);
 	return $result;
+
 }
 
 
-function printDetailsVenezia($page) {
+function printDetails($page) {
 
 	$doc = new simple_html_dom();
 
@@ -183,27 +276,19 @@ function printDetailsVenezia($page) {
 
 	$details = array();
 	
-	if (!empty($div_content)) {
-	
-		foreach($div_content->find('a') as $link) {
-			
-			$details[] = getDetailsVenezia($link->href);
-			
-		}
-	
-	} else {
+	foreach($div_content->find('a') as $link) {
 		
-		$details = null;
+		$details[] = getDetails($link->href);
 		
 	}
-	
+
 	return $details;
 }
 
 
 
 
-function doSearchVenezia($array, $cognomeName, $has_pagination) {
+function doSearch($array, $cognomeName, $has_pagination) {
 
 		
 	if (!empty($has_pagination)) {
@@ -242,10 +327,10 @@ function doSearchVenezia($array, $cognomeName, $has_pagination) {
 	
 	curl_close($curl);
 
-	//print_r (getPaginationParamsVenezia($page));
+	//print_r (getPaginationParams($page));
 	
 	
-	//$details = printDetailsVenezia($page);
+	//$details = printDetails($page);
 	
 	//echo $div_content;
 	
@@ -254,15 +339,15 @@ function doSearchVenezia($array, $cognomeName, $has_pagination) {
 }
 
 
-function finalResultVenezia($nomeSobrenome) {
+function finalResult($nomeSobrenome) {
 	
-	$first = firtsParamsVenezia();
+	$first = firtsParams();
 	
-	$first_search = doSearchVenezia($first, $nomeSobrenome, '');
+	$first_search = doSearch($first, $nomeSobrenome, '');
 	
-	$details = printDetailsVenezia($first_search);
+	$details = printDetails($first_search);
 	
-	$has_pagination = getPaginationParamsVenezia($first_search);
+	$has_pagination = getPaginationParams($first_search);
 	
 	if (!empty($has_pagination)) { 
 		
@@ -274,9 +359,9 @@ function finalResultVenezia($nomeSobrenome) {
 
 		while ($count <= $num_pages): //1 diferente de 2 ?
 			
-			$others_searchs = doSearchVenezia($first, $nomeSobrenome, $has_pagination);
+			$others_searchs = doSearch($first, $nomeSobrenome, $has_pagination);
 			
-			$others_details = printDetailsVenezia($others_searchs);
+			$others_details = printDetails($others_searchs);
 			
 			$details = array_merge($details, $others_details);	
 			
@@ -286,29 +371,25 @@ function finalResultVenezia($nomeSobrenome) {
 	
 	}
 	
-
-
-		$final_result = array();
-	
-	
-	
-	if(!empty($details)) {
-		
-		//$final_result['treviso']['status'] = true;
-		$final_result['venezia']['msg'] = 'OK!';
-		$final_result['venezia']['dados'] = $details;
-		
-	} else {
-		
-		//$final_result['treviso']['status'] = false;
-		$final_result['venezia']['msg'] = 'Nenhum Registro Encontrado!';
-		$final_result['venezia']['dados'] = null;
-
-		
-	}
-	
-	$final_result['venezia']['total_registro'] = count($details);
-	
-
-	return $final_result;
+	return $details;	
 }
+
+
+
+$final_result = finalResult('zanetti');
+
+
+if (empty($final_result)) {
+	 
+	$final_result[] = array('');
+}
+
+//print_r($final_result);
+
+$post_data = json_encode($final_result);
+
+//$post_data = json_encode(array('result' => $final_result));
+//$post_data = json_encode(array('item' => $final_result), JSON_FORCE_OBJECT);
+//$post_data = json_encode($final_result, JSON_FORCE_OBJECT);
+
+echo $post_data;
