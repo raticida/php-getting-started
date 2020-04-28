@@ -132,7 +132,17 @@ function getDetailsVenezia($url) {
 		$nome_da_mae = '';
 	}
 
-	preg_match('/.*\((.*)\)/', $comune_nascimento[1][0], $provincia);
+	if (!empty($comune_nascimento[1][0])) {
+		
+		preg_match('/.*\((.*)\)/', $comune_nascimento[1][0], $provincia);
+		
+	} else {
+		
+		$provincia = '';
+		
+	}
+	
+	
 	
 	$comune = preg_replace('/\(.*\)/', '', $comune_nascimento[1][0]);
 	
