@@ -23,10 +23,10 @@ if(!empty($_REQUEST['search'])) {
 
 
 	$final_result_treviso = array();
-	//$final_result_treviso = finalResultTreviso($sobrenome, $nome);
+	$final_result_treviso = finalResultTreviso($sobrenome, $nome);
 
 	$final_result_treviso2 = array();
-	//$final_result_treviso2 = finalResultTreviso2($sobrenome, $nome);
+	$final_result_treviso2 = finalResultTreviso2($sobrenome, $nome);
 
 	$final_result_padova = array();
 	$final_result_padova = finalResult($sobrenome, $nome);
