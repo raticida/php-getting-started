@@ -132,40 +132,47 @@ function getDetailsVenezia($url) {
 		$nome_da_mae = '';
 	}
 
-	if (!empty($comune_nascimento[1][0])) {
-		
+
+
+	if (isset($comune_nascimento[1][0])) {
+
 		preg_match('/.*\((.*)\)/', $comune_nascimento[1][0], $provincia);
+
 		
+		if (!empty($provincia[1])) {		
+				
+			$provincia = $provincia[1];
+			
+			$comune = preg_replace('/\(.*\)/', '', $comune_nascimento[1][0]);
+		
+		} else {
+			
+			if ($comune_nascimento[1][0] == 'Venezia') {
+				
+				$provincia = 'VENEZIA';
+				
+				$comune = $comune_nascimento[1][0];
+				
+			} else {
+				
+				$provincia = '';
+				
+				$comune = $comune_nascimento[1][0];
+				
+			}
+			
+			$comune = $comune_nascimento[1][0];
+		}		
+		
+		
+	
 	} else {
 		
 		$provincia = '';
 		
+		$comune = '';
+		
 	}
-	
-	
-	
-	$comune = preg_replace('/\(.*\)/', '', $comune_nascimento[1][0]);
-	
-	
-	if (!empty($provincia)) {
-	
-		$provincia = $provincia[1];
-		//$comune = preg_replace('/\(.*\)/', '', $comune_nascimento[1][0]);
-	
-	} else {
-		
-		if ($comune == 'Venezia') {
-			
-			$provincia = 'VENEZIA';
-		
-		} else {
-			
-			$provincia = '';
-		}
-		
-		$comune = $comune_nascimento[1][0];
-		
-	}	
 
 	// Print the entire match result
 	//var_dump($matches);
@@ -284,6 +291,8 @@ function finalResultVenezia($nomeSobrenome) {
 		$has_pagination['subgroup'] = $count;
 
 		while ($count <= $num_pages): //1 diferente de 2 ?
+		
+			$has_pagination['subgroup'] = $count;
 			
 			$others_searchs = doSearchVenezia($first, $nomeSobrenome, $has_pagination);
 			

@@ -1,12 +1,11 @@
 <?php
 
-
 function doLogin($code, $sent, $username, $password) {
 	
 	$curl = curl_init();
 
 	curl_setopt_array($curl, array(
-		CURLOPT_URL => 'http://archiviodistato.provincia.padova.it/leva/login.php',
+		CURLOPT_URL => 'https://archiviodistato.provincia.padova.it/leva/login.php',
 		CURLOPT_RETURNTRANSFER => true,
 		CURLOPT_ENCODING => "",
 		CURLOPT_MAXREDIRS => 10,
@@ -37,7 +36,7 @@ function doSearch($cognome, $nome, $init) {
 	$curl = curl_init();
 
 	curl_setopt_array($curl, array(
-		CURLOPT_URL => 'http://archiviodistato.provincia.padova.it/leva/consulta.php',
+		CURLOPT_URL => 'https://archiviodistato.provincia.padova.it/leva/consulta.php',
 		CURLOPT_RETURNTRANSFER => true,
 		CURLOPT_ENCODING => "",
 		CURLOPT_MAXREDIRS => 10,
@@ -56,8 +55,8 @@ function doSearch($cognome, $nome, $init) {
 								'giorno' => '',
 								'mese' => '',
 								'anno' => '',
-								'ord' => 'cognome',
-								'init' => $init
+								'ord' => 'cognome'
+								//'init' => $init
 								)
 	));
 
@@ -201,23 +200,12 @@ function buildTableResult($tables) {
 	
 	$doc = new simple_html_dom();
 	$html = $doc->load($tables);
-	$table = $html->find('#leva_risultati', 1);
-	
-	//pega a primeira linha da tabela (onde contém os títulos das colunas)
-	$th = $table->find('tr',0);
-	
-	$th_array = array();
-	foreach($th->find('td') as $th_item) {
-		$th_array[] = $th_item->plaintext;
-	}
-	
 	
 	//monta o array com a tabela toda
 	$table_array = array();
-	foreach($table->find('tr') as $row) {
-		
 	
-
+	foreach($html->find('table.table-risultati tbody tr') as $row) {
+		
 		$row->find('td', 5)->plaintext = provinceCheck($row->find('td', 5)->plaintext);
 
 		
@@ -250,10 +238,6 @@ function buildTableResult($tables) {
 	
 		$table_array[] = $titles;
 	}
-	
-	//remove a primeira linha (os titulos da tabela) da tabela completa
-	array_shift($table_array);
-
 	
 		
 	return $table_array;
@@ -293,28 +277,12 @@ function finalResult($cognome_param, $nome_param) {
 	
 	$search_result = doSearch($cognome_param, $nome_param, $init);
 	
-	$pages = checkPagination($search_result);
+	//$pages = checkPagination($search_result);
 	
 	$table_result = buildTableResult($search_result);
 	
 	$response = $table_result;
 	
-	$count = 1;
-
-	while ($count <= $pages):
-
-		$init = $count * 50;
-		
-		$search_result = doSearch($cognome_param, $nome_param, $init);
-		
-		$table_result = buildTableResult($search_result);
-
-		$response = array_merge($response, $table_result);
-
-		$count++;
-		
-		
-	endwhile;
 	
 	$final_result = array();
 
