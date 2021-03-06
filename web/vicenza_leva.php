@@ -72,14 +72,12 @@ function doSearchVicenza($array, $cognomeNome) {
 
 }
 
-/*
 function uppercaseText($text) {
 	
 	$text = strtoupper($text);
 	
 return $text;
 }
-*/
 
 function finalResultVicenza($cognomeNome) {
 	
