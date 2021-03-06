@@ -45,6 +45,9 @@ function getParamsVicenza() {
 	return $array;
 }
 
+echo "<pre>";
+print_r($array);
+
 
 function doSearchVicenza($array, $cognomeNome) {
 
@@ -165,7 +168,7 @@ function finalResultVicenza($cognomeNome) {
 	return $final_result;
 
 }
-
+/*
 header('Content-Type: application/json');
 
 	$sobrenome = 'zanett';
@@ -180,3 +183,4 @@ header('Content-Type: application/json');
 
 
 	echo $post_data;
+*/	
