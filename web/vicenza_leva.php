@@ -38,7 +38,12 @@ function getParamsVicenza() {
 
 	}
 
+	$array['your_name'] =  '';
 	$array['my_name'] =  '';
+	$array['my_address'] =  '';
+	$array['your_address'] =  '';
+	$array['your_address_here'] =  '';
+	$array['your_name_here'] =  '';
 	$array['searchfield'] =  'CognomeNome';
 	$array['limit'] =  '0';	
 	
@@ -52,7 +57,10 @@ function getParamsVicenza() {
 function doSearchVicenza($array, $cognomeNome) {
 
 	$array['search'] =  $cognomeNome;
-
+	
+	//echo "<pre>";
+	//print_r($array);
+	
 	$curl = curl_init();
 		
 	curl_setopt_array($curl, array(
@@ -68,17 +76,19 @@ function doSearchVicenza($array, $cognomeNome) {
 	));
 
 	$response = curl_exec($curl);
-
+	
 	curl_close($curl);
+	
+	//echo $response;
 
 	return $response;
+	
+	
 
 }
 
 
-echo "<pre>";
-$get_firsts_params = getParamsVicenza();
-print_r(doSearchVicenza($get_firsts_params, 'zanett')));
+//echo doSearchVicenza(getParamsVicenza(), 'zanett');
 
 
 function uppercaseText($text) {
@@ -174,19 +184,3 @@ function finalResultVicenza($cognomeNome) {
 	return $final_result;
 
 }
-/*
-header('Content-Type: application/json');
-
-	$sobrenome = 'zanett';
-	$nome = '';
-
-	$final_result_vicenza = array();
-	$final_result_vicenza = finalResultVicenza($sobrenome, $nome);	
-
-	$total = array_merge($final_result_vicenza);
-	$post_data = json_encode($total);
-	
-
-
-	echo $post_data;
-*/	

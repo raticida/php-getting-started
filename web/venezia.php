@@ -339,17 +339,3 @@ function finalResultVenezia($nomeSobrenome) {
 
 	return $final_result;
 }
-
-header('Content-Type: application/json');
-
-	$sobrenome = 'zanett';
-	$nome = '';
-
-	$final_result_venezia = array();
-	$final_result_venezia = finalResultVenezia($sobrenome, $nome);
-
-	$total = array_merge($final_result_venezia);
-	$post_data = json_encode($total);
-
-
-	echo $post_data;

@@ -1,6 +1,5 @@
 <?php
 
-
 function getFirstsParamsTreviso2() {
 
 	$curl = curl_init();
