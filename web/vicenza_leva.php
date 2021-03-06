@@ -171,10 +171,10 @@ header('Content-Type: application/json');
 	$sobrenome = 'zanett';
 	$nome = '';
 
-	$final_result_vicenza2 = array();
-	$final_result_vicenza2 = finalResultVicenza($sobrenome, $nome);
+	$final_result_vicenza = array();
+	$final_result_vicenza = finalResultVicenza($sobrenome, $nome);	
 
-	$total = array_merge($final_result_vicenza2);
+	$total = array_merge($final_result_vicenza);
 	$post_data = json_encode($total);
 	
 
