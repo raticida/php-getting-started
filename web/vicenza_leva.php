@@ -45,8 +45,10 @@ function getParamsVicenza() {
 	return $array;
 }
 
+
+
 echo "<pre>";
-print_r($array);
+print_r(getParamsVicenza());
 
 
 function doSearchVicenza($array, $cognomeNome) {
