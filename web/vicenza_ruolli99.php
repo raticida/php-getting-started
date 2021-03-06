@@ -1,4 +1,5 @@
 <?php
+include('utils/simple_html_dom.php');
 
 function getParamstVicenza2() {
 	
@@ -71,14 +72,14 @@ function doSearchVicenza2($array, $cognomeNome) {
 
 }
 
-/*
+
 function uppercaseText($text) {
 	
 	$text = strtoupper($text);
 	
 return $text;
 }
-*/
+
 
 
 function finalResultVicenza2($cognomeNome) {
@@ -175,3 +176,8 @@ function finalResultVicenza2($cognomeNome) {
 	
 
 }
+/*
+	$final_result_vicenza2 = array();
+	$final_result_vicenza2 = finalResultVicenza2('zanet');
+	
+	print_r($final_result_vicenza2);*/

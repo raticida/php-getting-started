@@ -1,5 +1,5 @@
 <?php
-
+include('utils/simple_html_dom.php');
 
 function getParamsVicenza() {
 	
