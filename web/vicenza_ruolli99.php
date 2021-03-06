@@ -176,12 +176,3 @@ function finalResultVicenza2($cognomeNome) {
 	
 
 }
-header('Content-Type: application/json');
-
-	$sobrenome = 'zanett';
-	$nome = '';
-	$final_result_vicenza2 = array();
-	$final_result_vicenza2 = finalResultVicenza2($sobrenome, $nome);
-	
-	$post_data = json_encode($final_result_vicenza2);
-	echo $post_data;
