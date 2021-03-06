@@ -47,8 +47,6 @@ function getParamsVicenza() {
 
 
 
-echo "<pre>";
-print_r(getParamsVicenza());
 
 
 function doSearchVicenza($array, $cognomeNome) {
@@ -76,6 +74,12 @@ function doSearchVicenza($array, $cognomeNome) {
 	return $response;
 
 }
+
+
+echo "<pre>";
+$get_firsts_params = getParamsVicenza();
+print_r(doSearchVicenza($get_firsts_params, 'zanett')));
+
 
 function uppercaseText($text) {
 	
