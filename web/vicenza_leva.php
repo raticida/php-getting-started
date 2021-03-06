@@ -165,3 +165,18 @@ function finalResultVicenza($cognomeNome) {
 	return $final_result;
 
 }
+
+header('Content-Type: application/json');
+
+	$sobrenome = 'zanett';
+	$nome = '';
+
+	$final_result_vicenza2 = array();
+	$final_result_vicenza2 = finalResultVicenza($sobrenome, $nome);
+
+	$total = array_merge($final_result_vicenza2);
+	$post_data = json_encode($total);
+	
+
+
+	echo $post_data;
