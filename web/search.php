@@ -11,6 +11,7 @@ include('vicenza_ruolli99.php');
 
 
 
+
 //verifica se o submit do form não é vazio para a variável search
 if(!empty($_REQUEST['search'])) {
 	
@@ -21,7 +22,6 @@ if(!empty($_REQUEST['search'])) {
 	//$sobrenome = 'CANALI';
 	$nome = '';
 
-/*
 	$final_result_treviso = array();
 	$final_result_treviso = finalResultTreviso($sobrenome, $nome);
 
@@ -36,14 +36,13 @@ if(!empty($_REQUEST['search'])) {
 	
 	$final_result_vicenza = array();
 	$final_result_vicenza = finalResultVicenza($sobrenome, $nome);	
-*/
+
 	$final_result_vicenza2 = array();
 	$final_result_vicenza2 = finalResultVicenza2($sobrenome, $nome);	
 
 
-	//$total = array_merge($final_result_treviso, $final_result_treviso2, $final_result_padova, $final_result_venezia, $final_result_vicenza, $final_result_vicenza2);
+	$total = array_merge($final_result_treviso, $final_result_treviso2, $final_result_padova, $final_result_venezia, $final_result_vicenza, $final_result_vicenza2);
 
-	$total = array_merge($final_result_vicenza2);
 
 
 

@@ -1,5 +1,4 @@
 <?php
-include('utils/simple_html_dom.php');
 
 function firtsParamsVenezia() {
 	
@@ -46,12 +45,6 @@ function firtsParamsVenezia() {
 	return $array;
 }
 
-function uppercaseText($text) {
-	
-	$text = strtoupper($text);
-	
-return $text;
-}
 
 function getPaginationParamsVenezia($page) {
 	
