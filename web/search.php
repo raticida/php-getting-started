@@ -8,6 +8,7 @@ include('treviso_renitenti.php');
 include('venezia.php');
 include('vicenza_leva.php');
 include('vicenza_ruolli99.php');
+include('udine.php');
 
 
 
@@ -39,9 +40,12 @@ if(!empty($_REQUEST['search'])) {
 
 	$final_result_vicenza2 = array();
 	$final_result_vicenza2 = finalResultVicenza2($sobrenome, $nome);	
+	
+	$final_result_udine = array();
+	$final_result_udine = finalResultUdine($sobrenome, $nome);
 
 
-	$total = array_merge($final_result_treviso, $final_result_treviso2, $final_result_padova, $final_result_venezia, $final_result_vicenza, $final_result_vicenza2);
+	$total = array_merge($final_result_treviso, $final_result_treviso2, $final_result_padova, $final_result_venezia, $final_result_vicenza, $final_result_vicenza2, $final_result_udine);
 
 
 

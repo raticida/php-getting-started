@@ -251,6 +251,7 @@ $(document).ready(function(){
 		var province = key;
 		var tableID = '#'+key;
 		var labelID = '#'+key+'Label';
+		//console.log(labelID);
 		var provinceData = value;
 		var countResult = value.total_registro;
 		
@@ -329,7 +330,10 @@ $(document).ready(function(){
 				  </li>
 				  <li class="nav-item">
 					<a class="nav-link" id="sixth-tab" data-toggle="tab" href="#sixth" role="tab" aria-controls="sixth" aria-selected="false">Vicenza II <span class="badge badge-primary" id="vicenza2Label"></span></a>
-				  </li>				  
+				  </li>
+				  <li class="nav-item">
+					<a class="nav-link" id="seventh-tab" data-toggle="tab" href="#seventh" role="tab" aria-controls="seventh" aria-selected="false">Udine <span class="badge badge-primary" id="udineLabel"></span></a>
+				  </li>						  
 				</ul>
 				<div class="tab-content">
 				  <div class="tab-pane fade show active" id="first" role="tabpanel" aria-labelledby="first-tab">
@@ -359,6 +363,11 @@ $(document).ready(function(){
 				  </div>
 				  <div class="tab-pane fade" id="sixth" role="tabpanel" aria-labelledby="sixth-tab">
 					<table id="vicenza2" class="table table-striped table-bordered" cellspacing="0" width="100%">
+
+					</table>			  
+				  </div>
+				  <div class="tab-pane fade" id="seventh" role="tabpanel" aria-labelledby="seventh-tab">
+					<table id="udine" class="table table-striped table-bordered" cellspacing="0" width="100%">
 
 					</table>			  
 				  </div>				  
